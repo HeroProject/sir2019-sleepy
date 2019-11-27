@@ -1,6 +1,6 @@
 import re
 
-with open("merged_clean.txt") as file:
+with open("story/story.txt") as file:
     split_stories = re.split("\n{5,10}(.+)\n{1}", file.read())
 
     i = 1
@@ -9,4 +9,3 @@ with open("merged_clean.txt") as file:
         if isinstance(s, str):
            print(str(i)+' '+s.lower().capitalize())
       i += 1
-

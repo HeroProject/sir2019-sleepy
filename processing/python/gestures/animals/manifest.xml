@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<package uuid="animals-238269" version="0.0.0">
+ <names>
+  <name lang="en_US">animals</name>
+ </names>
+ <descriptionLanguages>
+  <language>en_US</language>
+ </descriptionLanguages>
+ <contents>
+  <behaviorContent path="gorilla">
+   <nature>interactive</nature>
+   <autonomous/>
+   <permissions/>
+  </behaviorContent>
+  <behaviorContent path="mouse">
+   <nature>interactive</nature>
+   <autonomous/>
+   <permissions/>
+  </behaviorContent>
+  <behaviorContent path="elephant">
+   <nature>interactive</nature>
+   <autonomous/>
+   <permissions/>
+  </behaviorContent>
+  <behaviorContent path="vacuum">
+   <nature>interactive</nature>
+   <permissions/>
+  </behaviorContent>
+ </contents>
+</package>
