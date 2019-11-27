@@ -19,6 +19,7 @@ import random
 import string
 import time
 import sys
+import json
 import AbstractApplication as Base
 from threading import Semaphore
 
@@ -29,14 +30,25 @@ class DialogFlowSampleApplication(Base.AbstractApplication):
     number_of_tries = 0
     randomString    = ""
 
+    # the number represents the story id
+    animal_story_list = {
+        "gorilla":  [190, 124],
+        "elephant": [622, 30],
+        "cats":     [66, 124],
+        "lion":     [124, 122, 30]
+    }
+
     def yaml_open(self, dialog_name):
 
         # Open yaml file
-        print("\033[1;35;40m [!] \x1B[0m running: "+dialog_name)
+        print("\033[1;35;40m [-] \x1B[0m \t \033[1;37;40m running: \x1B[0 "+dialog_name)
         with open(r'dialogs/'+dialog_name) as file:
 
             # load yaml file
             output = yaml.load(file, Loader=yaml.FullLoader)
+
+            print("\n"+json.dumps(dictionary, indent=4, sort_keys=True))
+
 
             # nao pre gesture
             self.play_gesture(self.get_input(output, "pre_gesture"))
@@ -54,7 +66,7 @@ class DialogFlowSampleApplication(Base.AbstractApplication):
             listen_timeout	= self.get_input(output, "listen_timeout")
             lock_timeout	= self.get_input(output, "lock_timeout")
 
-            print("\033[1;35;40m [-] \x1B[0m name: "+name)
+            print("\033[1;35;40m [-] \x1B[0m \t \033[1;37;40m name: \x1B[0 "+name)
 
             # declare variables
             setattr(self, name_filt, None)
@@ -78,13 +90,13 @@ class DialogFlowSampleApplication(Base.AbstractApplication):
                 print(result.acquire(timeout=lock_timeout))
 
             robot_input = DialogFlowSampleApplication.name
-            print("robot_input", robot_input)
+            print("\033[1;35;40m [-] \x1B[0m \t \033[1;37;40m robot_input: \x1B[0 "+robot_input)
             self.setEyeColour("white")
 
             i = 0
             response = False
 
-            print(output)
+            # print(output)
             total_options = len(self.get_input(output, "catch_success"))
 
             if "catch_success" in output:
@@ -94,13 +106,13 @@ class DialogFlowSampleApplication(Base.AbstractApplication):
                     regex_match = catch_success["match"]
 
                     if robot_input:
-                        print("match", regex_match)
-                        print("input", robot_input)
+                        print("\033[1;35;40m [-] \x1B[0m \t \033[1;37;40m Regex match: \x1B[0 "+regex_match)
+                        print("\033[1;35;40m [-] \x1B[0m \t \033[1;37;40m Regex input: \x1B[0 "+robot_input)
                         match = re.match(regex_match, robot_input)
 
                         if match:
                             response = True
-                            print("\033[1;35;40m [*] \x1B[0m match true")
+                            print("\033[1;35;40m [ \U00002714 ] \x1B[0m \t \033[1;38;40m Match True: \x1B[0 ")
 
                             # Talk
                             sub = self.subs_words(catch_success[True]["talk"], robot_input)
@@ -115,6 +127,8 @@ class DialogFlowSampleApplication(Base.AbstractApplication):
                             # Go To next dialog or call a method
                             # print("caatcch", catch_success)
                             print(self.get_goto(catch_success[True]["goto"]))
+                        else:
+                            print("\033[5;33;40m [ \U00002757 ] \x1B[0m \t \033[1;33;40m Match False: \x1B[0 ")
 
 
             if not response:
@@ -122,7 +136,7 @@ class DialogFlowSampleApplication(Base.AbstractApplication):
                 # DialogFlowSampleApplication.randomString    = self.randomString()
                 DialogFlowSampleApplication.number_of_tries += 1
 
-                print("\033[1;35;40m [*] \x1B[0m match fail")
+                print("\033[5;32;40m [ \U00002757 ] \x1B[0m match fail")
 
                 # Play gesture
                 self.play_gesture(self.get_input(output["catch_fail_recognize"], "gesture"))
@@ -146,7 +160,7 @@ class DialogFlowSampleApplication(Base.AbstractApplication):
             DialogFlowSampleApplication.name = False
 
     def pick_story(self):
-        print("pick story!")
+        print("\033[1;35;40m [ \U00002714 ] \x1B[0m \t \033[1;38;40m pick story! \x1B[0 ")
         with open("story/story.txt") as file:
             split_stories = re.split("\n{5,10}(.+)\n{1}", file.read())
 
@@ -159,8 +173,27 @@ class DialogFlowSampleApplication(Base.AbstractApplication):
             # 124 - The Lion and the Cat
 
             # pick_random_story	= random.randrange(0, len(split_stories), 2)
-            story_name_1		= split_stories[190-1]
-            story_text_1		= split_stories[190]
+
+
+
+            # when favorite animal exists, otherwise the favorite animal question is skipped
+            if "favorite_animal" in DialogFlowSampleApplication.dialog_list:
+
+                # when the favorite animal is inside the story list
+                if DialogFlowSampleApplication.dialog_list["favorite_animal"] in DialogFlowSampleApplication.animal_story_list:
+
+                    if not DialogFlowSampleApplication.animal_story_list[DialogFlowSampleApplication.dialog_list["favorite_animal"]]:
+                        # list is empty
+                        print("empty")
+                    else:
+                        # pick the first numer
+                        read_story_id = DialogFlowSampleApplication.animal_story_list[0]
+
+                        # remove from list
+                        DialogFlowSampleApplication.animal_story_list["animal"].remove(read_story_id)
+
+            story_name_1		= split_stories[read_story_id-1]
+            story_text_1		= split_stories[read_story_id]
 
             self.talk("Would you like to hear "+story_name_1+"?")
 
@@ -186,14 +219,28 @@ class DialogFlowSampleApplication(Base.AbstractApplication):
                 print(result.acquire(timeout=lock_timeout))
 
             robot_input = DialogFlowSampleApplication.name
+
+            print("robot input", robot_input)
             # Respond and wait for that to finish
             if robot_input:
-                self.talk('Nice, I will read the story')
 
-                # sentences = re.split("(.?).", story_text_1)
+                if re.match("^(yes)", robot_input):
+                    self.talk('Nice, I will read the story: '+story_name_1)
 
-                self.talk(story_text_1)
+                    for sentence in story_text_1.split("."):
+                        print(sentence)
+                        self.talk(sentence)
+                        time.sleep(1)
+
+                else:
+                    # pick another story
+                    self.pick_story():
+                    return
+
+
+
             else:
+                print("\033[5;32;40m [ \U00002757 ] \x1B[0m Fail recognizing")
                 self.talk('Sorry, I didn\'t catch your answer.')
                 self.pick_story():
 
@@ -209,9 +256,6 @@ class DialogFlowSampleApplication(Base.AbstractApplication):
 
         returns This method / method is an example
         """
-        print("rule", rule)
-        print("replace", replace)
-        print("input", input)
         return re.sub(rule, replace, input)
 
 
@@ -221,52 +265,42 @@ class DialogFlowSampleApplication(Base.AbstractApplication):
         when a yaml extension is found. If this is not found the
         function will see this as a function and call it.
         """
-        # create_random_string = self.randomString()
-        create_random_string = "aa"
-
-        # print(create_random_string, type(create_random_string))
 
         # generate random string. This will prevent locking problems.
         DialogFlowSampleApplication.name            = ""
-        DialogFlowSampleApplication.randomString    = create_random_string
+        DialogFlowSampleApplication.randomString    = "randomstring"
         DialogFlowSampleApplication.number_of_tries = 0
 
         print("")
-        print(" == Dialog Answers == ")
-        print(DialogFlowSampleApplication.dialog_answers)
+        print("------------------------------")
+        print("\033[1;37;40m  == \U0001F916 ==  \x1B[0m")
+
+        if bool(DialogFlowSampleApplication.dialog_answers):
+            print("\n\033[5;34;36m"+json.dumps(DialogFlowSampleApplication.dialog_answers, indent=4, sort_keys=True)+"\x1B[0m")
+
+        print("\033[1;36;40m  goto: "+goto+" \x1B[0m")
+        print("------------------------------")
         print("")
-        print("goto", goto)
-        print(type(goto))
 
         if re.search("(yaml)$", goto):
             self.yaml_open(goto)
         else:
-            print(">>>")
-            # print(dir(os))
-            # goto = "pick_story"
-            getattr(self, goto)()
-            # getattr(self, goto)()
-
-            # if goto in dir(os):
-            #     print("call")
-            #     globals()[goto]()
+            if hasattr(self, goto):
+                print("function call")
+                getattr(self, goto)()
 
     def play_gesture(self, gesturename):
         if gesturename is not "":
             """ Play gestures """
-            print("\033[1;35;40m [-] \x1B[0m gesture start: "+gesturename)
+            print("\033[1;35;40m [-] \x1B[0m \t \033[1;37;40m gesture start: \x1B[0 "+gesturename)
 
             self.gestureLock = Semaphore(0)
 
-            print("\033[1;35;40m [-] \x1B[0m gesture name: "+gesturename)
-
-            # try:
-            # print("--- gesture",
             self.doGesture(gesturename)
-            # excepy:
+
             self.gestureLock.acquire()
 
-            print("\033[1;35;40m [-] \x1B[0m gesture stop")
+            print("\033[1;35;40m [-] \x1B[0m \t \033[1;37;40m gesture stop \x1B[0 ")
 
     def get_input(self, arr, name):
         """
@@ -275,20 +309,13 @@ class DialogFlowSampleApplication(Base.AbstractApplication):
         try:
             return(arr[name])
         except:
-            print("[!] no "+name+" found in ", arr)
+            print("\033[1;32;40m [ \U00002757 ] \x1B[0m [!] no "+name+" found in ", arr)
         return ""
 
     def str_to_class(self, str):
         return getattr(sys.modules, str)
 
     def main(self):
-
-        # a = getattr(self, goto)
-        # a
-        # globals()[goto]()
-        # self.str_to_class(goto)
-        # globals()["pick_story"]()
-
         """ Main """
         self.setRecordAudio(True)
         self.langLock = Semaphore(0)
@@ -317,21 +344,21 @@ class DialogFlowSampleApplication(Base.AbstractApplication):
             self.gestureLock.release()
         elif event == "RightBumperPressed":
             self.talk("Ouch! Don not do that you are so rude! Fuck you")
+            self.speechLock.release()
         elif event == "LeftBumperPressed":
             self.talk("Don't touch my foot")
+            self.speechLock.release()
             self.turnLeft()
-        # print("aa")
+            self.gestureLock.release()
 
     def randomString(self, stringLength=10):
-
         letters = string.ascii_lowercase
-        a = ''.join(random.choice(letters) for i in range(stringLength))
-        self.talk(a)
-        return a
+        r = ''.join(random.choice(letters) for i in range(stringLength))
+        return r
 
     def onAudioIntent(self, *args, intentName):
-        print("args", args)
-        print("intentname", intentName)
+        # print("args", args)
+        # print("intentname", intentName)
 
         if intentName in DialogFlowSampleApplication.dialog_list and len(args) > 0:
             # save in DialogFlowSampleApplication.name
