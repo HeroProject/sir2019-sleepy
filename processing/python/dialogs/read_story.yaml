@@ -27,7 +27,7 @@ catch_success:
   - option:
     match: ^(no)
     true:
-       talk: "Ah that is sad!"
+       talk: "That's a shame your parents paid 20000 euros for me. You ingrate"
        goto: "pick_story"
        gesture: ""
 
