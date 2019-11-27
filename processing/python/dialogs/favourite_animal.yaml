@@ -22,25 +22,25 @@ catch_success:
     # when gorilla
     match: ^([Gg]orill.+)
     true:
-       talk: "I like [input] too! "
+       talk: "Nice animal, [answer_name]! I like [input] too! "
        goto: "read_story.yaml"
-       gesture: "gorilla/behavior_1"
+       gesture: "animals/gorilla"
 
   - option:
     # when fish
     match: ^([Ff]is.+)
     true:
-       talk: "Blup I am a fish"
+       talk: "Nice animal, [answer_name]! Blub I am a fish"
        goto: "read_story.yaml"
-       gesture: "vacuum/behavior_1"
+       gesture: "animals/vacuum"
 
   - option:
     # All others
     match: (.?)
     true:
-       talk: "I like [input] too"
+       talk: "Nice animal, [answer_name]! I like [input] too"
        goto: "read_story.yaml"
-       gesture: ""
+       gesture: "animals/elephant"
 
 catch_fail_recognize:
   talk: "Sorry, I didn't catch your answer."
