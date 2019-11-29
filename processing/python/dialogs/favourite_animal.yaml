@@ -22,7 +22,7 @@ catch_success:
     # when gorilla
     match: ^([Gg]orill.+)
     true:
-       talk: "Nice animal, [answer_name]! I like [input] too! "
+       talk: "Nice animal, [answer_name]! Look at me I am a [input], king of the jungle !"
        goto: "read_story.yaml"
        gesture: "animals/gorilla"
 
@@ -30,12 +30,19 @@ catch_success:
     # when fish
     match: ^([Ff]is.+)
     true:
-       talk: "Nice animal, [answer_name]! Blub I am a fish"
+       talk: "Nice animal, [answer_name]! Blub I am a fish, blub, blub."
        goto: "read_story.yaml"
        gesture: "animals/vacuum"
 
   - option:
-    # All others
+    # when elephant
+    match: ^([Ee]leph.+)
+    true:
+       talk: "Nice animal, [answer_name]! I like [input] too. I know how to act like the friendly elephant, look!"
+       goto: "read_story.yaml"
+       gesture: "animals/elephant"
+  - option:
+    # Others
     match: (.?)
     true:
        talk: "Nice animal, [answer_name]! I like [input] too"

@@ -21,7 +21,7 @@ catch_success:
   - option:
     match: (.?)
     true:
-       talk: "Nice to meet you [input]"
+       talk: "That's a cool name! Nice to meet you [input]!"
        goto: "favourite_animal.yaml"
        gesture: ""
 
