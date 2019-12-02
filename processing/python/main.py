@@ -227,10 +227,40 @@ class DialogFlowSampleApplication(Base.AbstractApplication):
                 if re.match("^(yes)", robot_input):
                     self.talk('Nice, I will read the story: '+story_name_1)
 
+                    i = 0
                     for sentence in story_text_1.split("."):
                         print(sentence)
                         self.talk(sentence)
                         time.sleep(1)
+                        
+                        if(i % 10 == 0):
+                            self.talk("Do you want me to continue?")
+                            
+                            name               = 'continue_story'
+                            name_filt           = name.replace("_", "")
+                            listen_timeout = 5
+                            
+                            DialogFlowSampleApplication.dialog_list.append(name)
+                            
+                            setattr(self, name_filt, None)
+                            setattr(self, name_filt+DialogFlowSampleApplication.randomString+"Lock", Semaphore(0))
+                            
+                            self.setAudioContext(name)
+                            self.startListening()
+                            
+                            result = getattr(self, name_filt+DialogFlowSampleApplication.randomString+'Lock')
+                            print(result.acquire(timeout=listen_timeout))
+                            lock_timeout = 5
+                            
+                            self.stopListening()
+                            if not getattr(self, name_filt):
+                                print(result.acquire(timeout=lock_timeout))
+                                
+                            robot_input = DialogFlowSampleApplication.name
+                            if re.match("^(yes)", robot_input):
+                                break;
+                                
+                        i += 1
 
                 else:
                     # pick another story
