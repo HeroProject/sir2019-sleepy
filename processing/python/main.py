@@ -41,13 +41,13 @@ class DialogFlowSampleApplication(Base.AbstractApplication):
     def yaml_open(self, dialog_name):
 
         # Open yaml file
-        print("\033[1;35;40m [-] \x1B[0m \t \033[1;37;40m running: \x1B[0 "+dialog_name)
+        print("\033[1;35;40m [-] \x1B[0m \t \033[1;37;40m running: \x1B[0m "+dialog_name)
         with open(r'dialogs/'+dialog_name) as file:
 
             # load yaml file
             output = yaml.load(file, Loader=yaml.FullLoader)
 
-            print("\n"+json.dumps(dictionary, indent=4, sort_keys=True))
+            # print("\n"+json.dumps(output, indent=4, sort_keys=True))
 
 
             # nao pre gesture
@@ -66,7 +66,7 @@ class DialogFlowSampleApplication(Base.AbstractApplication):
             listen_timeout	= self.get_input(output, "listen_timeout")
             lock_timeout	= self.get_input(output, "lock_timeout")
 
-            print("\033[1;35;40m [-] \x1B[0m \t \033[1;37;40m name: \x1B[0 "+name)
+            print("\033[1;35;40m [-] \x1B[0m \t \033[1;37;40m name: \x1B[0m "+name)
 
             # declare variables
             setattr(self, name_filt, None)
@@ -90,7 +90,7 @@ class DialogFlowSampleApplication(Base.AbstractApplication):
                 print(result.acquire(timeout=lock_timeout))
 
             robot_input = DialogFlowSampleApplication.name
-            print("\033[1;35;40m [-] \x1B[0m \t \033[1;37;40m robot_input: \x1B[0 "+robot_input)
+            print("\033[1;35;40m [-] \x1B[0m \t \033[1;37;40m robot_input: \x1B[0m "+robot_input)
             self.setEyeColour("white")
 
             i = 0
@@ -106,13 +106,13 @@ class DialogFlowSampleApplication(Base.AbstractApplication):
                     regex_match = catch_success["match"]
 
                     if robot_input:
-                        print("\033[1;35;40m [-] \x1B[0m \t \033[1;37;40m Regex match: \x1B[0 "+regex_match)
-                        print("\033[1;35;40m [-] \x1B[0m \t \033[1;37;40m Regex input: \x1B[0 "+robot_input)
+                        print("\033[1;35;40m [-] \x1B[0m \t \033[1;37;40m Regex match: \x1B[0m "+regex_match)
+                        print("\033[1;35;40m [-] \x1B[0m \t \033[1;37;40m Regex input: \x1B[0m "+robot_input)
                         match = re.match(regex_match, robot_input)
 
                         if match:
                             response = True
-                            print("\033[1;35;40m [ \U00002714 ] \x1B[0m \t \033[1;38;40m Match True: \x1B[0 ")
+                            print("\033[1;35;40m [ \U00002714 ] \x1B[0m \t \033[1;38;40m Match True: \x1B[0m ")
 
                             # Talk
                             sub = self.subs_words(catch_success[True]["talk"], robot_input)
@@ -128,7 +128,7 @@ class DialogFlowSampleApplication(Base.AbstractApplication):
                             # print("caatcch", catch_success)
                             print(self.get_goto(catch_success[True]["goto"]))
                         else:
-                            print("\033[5;33;40m [ \U00002757 ] \x1B[0m \t \033[1;33;40m Match False: \x1B[0 ")
+                            print("\033[5;33;40m [ \U00002757 ] \x1B[0m \t \033[1;33;40m Match False: \x1B[0m ")
 
 
             if not response:
@@ -160,7 +160,7 @@ class DialogFlowSampleApplication(Base.AbstractApplication):
             DialogFlowSampleApplication.name = False
 
     def pick_story(self):
-        print("\033[1;35;40m [ \U00002714 ] \x1B[0m \t \033[1;38;40m pick story! \x1B[0 ")
+        print("\033[1;35;40m [ \U00002714 ] \x1B[0m \t \033[1;38;40m pick story! \x1B[0m ")
         with open("story/story.txt") as file:
             split_stories = re.split("\n{5,10}(.+)\n{1}", file.read())
 
@@ -177,6 +177,7 @@ class DialogFlowSampleApplication(Base.AbstractApplication):
 
 
             # when favorite animal exists, otherwise the favorite animal question is skipped
+            read_story_id = 190
             if "favorite_animal" in DialogFlowSampleApplication.dialog_list:
 
                 # when the favorite animal is inside the story list
@@ -234,7 +235,7 @@ class DialogFlowSampleApplication(Base.AbstractApplication):
 
                 else:
                     # pick another story
-                    self.pick_story():
+                    self.pick_story()
                     return
 
 
@@ -242,7 +243,7 @@ class DialogFlowSampleApplication(Base.AbstractApplication):
             else:
                 print("\033[5;32;40m [ \U00002757 ] \x1B[0m Fail recognizing")
                 self.talk('Sorry, I didn\'t catch your answer.')
-                self.pick_story():
+                self.pick_story()
 
             self.speechLock.acquire()
 
@@ -292,7 +293,7 @@ class DialogFlowSampleApplication(Base.AbstractApplication):
     def play_gesture(self, gesturename):
         if gesturename is not "":
             """ Play gestures """
-            print("\033[1;35;40m [-] \x1B[0m \t \033[1;37;40m gesture start: \x1B[0 "+gesturename)
+            print("\033[1;35;40m [-] \x1B[0m \t \033[1;37;40m gesture start: \x1B[0m "+gesturename)
 
             self.gestureLock = Semaphore(0)
 
@@ -300,7 +301,7 @@ class DialogFlowSampleApplication(Base.AbstractApplication):
 
             self.gestureLock.acquire()
 
-            print("\033[1;35;40m [-] \x1B[0m \t \033[1;37;40m gesture stop \x1B[0 ")
+            print("\033[1;35;40m [-] \x1B[0m \t \033[1;37;40m gesture stop \x1B[0m ")
 
     def get_input(self, arr, name):
         """
@@ -345,6 +346,7 @@ class DialogFlowSampleApplication(Base.AbstractApplication):
         elif event == "RightBumperPressed":
             self.talk("Ouch! Don not do that you are so rude! Fuck you")
             self.speechLock.release()
+            self.gestureLock.release()
         elif event == "LeftBumperPressed":
             self.talk("Don't touch my foot")
             self.speechLock.release()
