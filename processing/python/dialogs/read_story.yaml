@@ -2,7 +2,7 @@
 name: read_story
 
 # Pre-talk (like asking the question)
-pre_talk: "I know a great story about animals. Would you like to hear a story?"
+pre_talk: "I know a great story about animals, [answer_name]. Would you like to hear a story about [favorite_animal]?"
 pre_gesture: ""
 
 # Listen and lock timeout
@@ -27,12 +27,12 @@ catch_success:
   - option:
     match: ^(no)
     true:
-       talk: "That's a shame your parents paid 20000 euros for me. You ingrate"
+       talk: "Are you super, duper sure about that, [answer_name]? It's the most awesome story in the history of all stories"
        goto: "pick_story"
        gesture: ""
 
 catch_fail_recognize:
-  talk: "Sorry, I didn't catch your answer."
+  talk: "Is that a yes, or a no?"
   gesture: ""
 
   max_tries: 3
