@@ -32,7 +32,7 @@ class DialogFlowSampleApplication(Base.AbstractApplication):
 
     # the number represents the story id
     animal_story_list = {
-        "gorilla":  [190, 124],
+        "gorilla":  [190, 124, 622, 30, 66, 124],
         "elephant": [622, 30],
         "cats":     [66, 124],
         "lion":     [124, 122, 30]
@@ -54,7 +54,13 @@ class DialogFlowSampleApplication(Base.AbstractApplication):
             self.play_gesture(self.get_input(output, "pre_gesture"))
 
             # nao pre talk
-            self.talk(self.get_input(output, "pre_talk"))
+            # self.talk(self.get_input(output, "pre_talk"))
+
+            sub3 = self.get_input(output, "pre_talk")
+            for words in DialogFlowSampleApplication.dialog_answers:
+                sub3 = self.subs_words(sub3, DialogFlowSampleApplication.dialog_answers[words], rule='\[[ ]?'+words+'[ ]?\]')
+
+            self.talk(sub3)
 
             # get name, this should correspond to dialogname
             name		= self.get_input(output, "name")
@@ -122,7 +128,18 @@ class DialogFlowSampleApplication(Base.AbstractApplication):
                             self.talk(sub)
 
                             # Play gesture
-                            self.play_gesture(catch_success[True]["gesture"])
+                            if self.get_input(catch_success[True], "gesture") != "":
+                                self.play_gesture(catch_success[True]["gesture"])
+
+
+
+                            # Talk
+                            if self.get_input(catch_success[True], "post_talk") != "":
+                                sub2 = self.subs_words(catch_success[True]["post_talk"], robot_input)
+                                for words in DialogFlowSampleApplication.dialog_answers:
+                                    sub2 = self.subs_words(sub2, DialogFlowSampleApplication.dialog_answers[words], rule='\[[ ]?'+words+'[ ]?\]')
+
+                                self.talk(sub2)
 
                             # Go To next dialog or call a method
                             # print("caatcch", catch_success)
@@ -135,7 +152,7 @@ class DialogFlowSampleApplication(Base.AbstractApplication):
                 # generate new unique string and add +1 to number of tries
                 # DialogFlowSampleApplication.randomString    = self.randomString()
                 DialogFlowSampleApplication.number_of_tries += 1
-
+                self.setEyeColour("red")
                 print("\033[5;32;40m [ \U00002757 ] \x1B[0m match fail")
 
                 # Play gesture
@@ -144,15 +161,15 @@ class DialogFlowSampleApplication(Base.AbstractApplication):
                 # Talk
                 self.talk(self.get_input(output["catch_fail_recognize"], "talk"))
 
-                # print("\033[1;35;40m [!] \x1B[0m tries ["+DialogFlowSampleApplication.number_of_tries.str()+"/"+self.get_input(output["catch_fail_recognize"])+"]")
-
                 # sleep 1 second, before moving
                 time.sleep(1)
 
                 # Go To next dialog or call a method
+                self.setEyeColour("white")
                 if DialogFlowSampleApplication.number_of_tries < self.get_input(output["catch_fail_recognize"], "max_tries"):
                     self.yaml_open(dialog_name)
                 else:
+                    DialogFlowSampleApplication.dialog_answers[name] = ""
                     self.get_goto(self.get_input(output["catch_fail_recognize"], "max_tries_goto"))
 
 
@@ -175,26 +192,28 @@ class DialogFlowSampleApplication(Base.AbstractApplication):
             # pick_random_story	= random.randrange(0, len(split_stories), 2)
 
 
-
             # when favorite animal exists, otherwise the favorite animal question is skipped
             read_story_id = 190
-            if "favorite_animal" in DialogFlowSampleApplication.dialog_list:
+            DialogFlowSampleApplication.dialog_answers["favorite_animal"] = "gorilla"
+            if "favorite_animal" in DialogFlowSampleApplication.dialog_answers:
+                if DialogFlowSampleApplication.dialog_answers["favorite_animal"] in DialogFlowSampleApplication.animal_story_list:
 
                 # when the favorite animal is inside the story list
-                if DialogFlowSampleApplication.dialog_list["favorite_animal"] in DialogFlowSampleApplication.animal_story_list:
-
-                    if not DialogFlowSampleApplication.animal_story_list[DialogFlowSampleApplication.dialog_list["favorite_animal"]]:
+                    if not DialogFlowSampleApplication.animal_story_list[DialogFlowSampleApplication.dialog_answers["favorite_animal"]]:
                         # list is empty
                         print("empty")
                     else:
+                        print(DialogFlowSampleApplication.animal_story_list)
                         # pick the first numer
-                        read_story_id = DialogFlowSampleApplication.animal_story_list[0]
+                        read_story_id = random.choice(DialogFlowSampleApplication.animal_story_list[DialogFlowSampleApplication.dialog_answers["favorite_animal"]])
+                        print(read_story_id)
 
                         # remove from list
-                        DialogFlowSampleApplication.animal_story_list["animal"].remove(read_story_id)
+                        DialogFlowSampleApplication.animal_story_list[DialogFlowSampleApplication.dialog_answers["favorite_animal"]].remove(read_story_id)
 
             story_name_1		= split_stories[read_story_id-1]
             story_text_1		= split_stories[read_story_id]
+            print(story_name_1)
 
             self.talk("Would you like to hear "+story_name_1+"?")
 
@@ -237,8 +256,6 @@ class DialogFlowSampleApplication(Base.AbstractApplication):
                     # pick another story
                     self.pick_story()
                     return
-
-
 
             else:
                 print("\033[5;32;40m [ \U00002757 ] \x1B[0m Fail recognizing")
@@ -320,6 +337,7 @@ class DialogFlowSampleApplication(Base.AbstractApplication):
         """ Main """
         self.setRecordAudio(True)
         self.langLock = Semaphore(0)
+        # self.setLanguage('tr-TR')
         self.setLanguage('en-US')
         self.langLock.acquire()
 
@@ -329,6 +347,7 @@ class DialogFlowSampleApplication(Base.AbstractApplication):
 
         # name of yaml file, inside dialogs directory
         self.get_goto("meeting_robot.yaml")
+        # self.get_goto("pick_story")
 
     def talk(self, message):
         """ Talk """
@@ -343,15 +362,20 @@ class DialogFlowSampleApplication(Base.AbstractApplication):
             self.speechLock.release()
         elif event == 'GestureDone':
             self.gestureLock.release()
-        elif event == "RightBumperPressed":
-            self.talk("Ouch! Don not do that you are so rude! Fuck you")
-            self.speechLock.release()
-            self.gestureLock.release()
-        elif event == "LeftBumperPressed":
-            self.talk("Don't touch my foot")
-            self.speechLock.release()
-            self.turnLeft()
-            self.gestureLock.release()
+        elif event == 'MiddleTactilTouched':
+            print("stop")
+            self.talk("it was nice to meet you")
+
+        # elif event == "RightBumperPressed":
+        #     self.talk("Ouch! Don not do that you are so rude! Fuck you")
+        #     self.speechLock.release()
+        #     self.gestureLock.release()
+        # elif event == "LeftBumperPressed":
+        #     self.talk("Don't touch my foot")
+        #     self.speechLock.release()
+        #     self.turnLeft()
+        #     self.gestureLock.release()
+        # print(event)
 
     def randomString(self, stringLength=10):
         letters = string.ascii_lowercase
