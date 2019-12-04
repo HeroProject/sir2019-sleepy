@@ -50,7 +50,13 @@ catch_success:
        talk: "Nice animal, [answer_name]! I like [input] too. I know how to act like the friendly elephant, look!"
        goto: "read_story.yaml"
        gesture: "animals/elephant"
-
+  - option:
+    # when elephant
+    match: ^([Mm]ous.+)
+    true:
+       talk: "Nice animal, [answer_name]! I like [input] too. I know how to act like a teeny, tiny, cute little rodent too, look!"
+       goto: "read_story.yaml"
+       gesture: "animals/mouse"
   - option:
     # Others
     match: (.?)

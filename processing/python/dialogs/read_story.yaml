@@ -21,18 +21,18 @@ catch_success:
   - option:
     match: ^(yes)
     true:
-       talk: "Lovely!"
+       talk: "Yay, Lovely!"
        goto: "pick_story"
        gesture: ""
   - option:
     match: ^(no)
     true:
-       talk: "Are you super, duper sure about that, [answer_name]? It's the most awesome story in the history of all stories"
+       talk: "Are you super, duper sure about that, [answer_name]? It's the most awesome story in the history of all stories about the [favorite_animal]"
        goto: "pick_story"
        gesture: ""
 
 catch_fail_recognize:
-  talk: "Is that a yes, or a no?"
+  talk: "Is that a yes, or a no, [answer_name] ?"
   gesture: ""
 
   max_tries: 3

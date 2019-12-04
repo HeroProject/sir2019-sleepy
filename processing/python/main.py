@@ -246,6 +246,7 @@ class DialogFlowSampleApplication(Base.AbstractApplication):
 
                 if re.match("^(yes)", robot_input):
                     self.talk('Nice, I will read the story: '+story_name_1)
+                    self.talk('To stop me, just hit me on the top of my dome, child')
 
                     for sentence in story_text_1.split("."):
                         print(sentence)
@@ -364,7 +365,7 @@ class DialogFlowSampleApplication(Base.AbstractApplication):
             self.gestureLock.release()
         elif event == 'MiddleTactilTouched':
             print("stop")
-            self.talk("it was nice to meet you")
+            self.talk("Oke, I will stop the story. Thank you for listening. I wish you a good night. I am going to sleep as well. Let's read again tomorrow.")
 
         # elif event == "RightBumperPressed":
         #     self.talk("Ouch! Don not do that you are so rude! Fuck you")

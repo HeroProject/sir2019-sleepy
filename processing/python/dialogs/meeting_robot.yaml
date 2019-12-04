@@ -28,7 +28,7 @@ catch_success:
        gesture: ""
 
 catch_fail_recognize:
-  talk: "Sorry, I didn't catch your answer."
+  talk: "Sorry, I didn't catch your answer, but I so want to get to know you, what is your name, child?."
   gesture: ""
 
   max_tries: 3
