@@ -1,0 +1,45 @@
+{
+  "id": "37df8e81-a3bb-4678-b3a1-3bda394431a5",
+  "name": "which_story",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "which_story",
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "id": "b66e5fd3-82a5-48b8-b341-6039c2788c0f",
+          "required": false,
+          "dataType": "@sequence",
+          "name": "sequence",
+          "value": "$sequence",
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": [],
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "condition": "",
+          "speech": "Ok, I am reading the $sequence story"
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": [],
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": []
+}

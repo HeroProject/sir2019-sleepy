@@ -1,0 +1,53 @@
+{
+  "id": "ee611ece-5bbf-4f77-84fa-6c2090eb9be3",
+  "name": "ask_read_story",
+  "auto": true,
+  "contexts": [
+    "ask_read_story"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "ask_read_story",
+      "affectedContexts": [
+        {
+          "name": "ask_read_story",
+          "parameters": {},
+          "lifespan": 0
+        }
+      ],
+      "parameters": [
+        {
+          "id": "9b65e3f5-3e06-4435-aa40-289471e09d57",
+          "required": false,
+          "dataType": "@boolean",
+          "name": "read_story",
+          "value": "$read_story",
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": [],
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "condition": "",
+          "speech": []
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": [],
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": []
+}

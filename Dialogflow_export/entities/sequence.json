@@ -1,0 +1,9 @@
+{
+  "id": "936f0ab2-60dc-4358-b8fa-f97f7ea0c700",
+  "name": "sequence",
+  "isOverridable": true,
+  "isEnum": false,
+  "isRegexp": false,
+  "automatedExpansion": false,
+  "allowFuzzyExtraction": false
+}

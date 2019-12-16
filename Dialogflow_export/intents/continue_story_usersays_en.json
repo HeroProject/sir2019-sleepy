@@ -1,0 +1,56 @@
+[
+  {
+    "id": "5b72dd5d-568f-4cc7-9d71-4e37b001cc6e",
+    "data": [
+      {
+        "text": "oke",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "200a79c0-a5ac-4690-abcd-992fd76051a6",
+    "data": [
+      {
+        "text": "yes, please",
+        "alias": "boolean",
+        "meta": "@boolean",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "507ffce8-bbb5-48ed-b48a-8a7b384b43a7",
+    "data": [
+      {
+        "text": "no",
+        "alias": "boolean",
+        "meta": "@boolean",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "1561d00e-e444-4dca-ac3a-e5c82c3831ea",
+    "data": [
+      {
+        "text": "yes",
+        "alias": "boolean",
+        "meta": "@boolean",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  }
+]

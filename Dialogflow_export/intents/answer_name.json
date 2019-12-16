@@ -1,0 +1,53 @@
+{
+  "id": "d89dbe8a-b803-444a-80b2-bdebbd46aebb",
+  "name": "answer_name",
+  "auto": true,
+  "contexts": [
+    "answer_name"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "answer_name",
+      "affectedContexts": [
+        {
+          "name": "answer_name",
+          "parameters": {},
+          "lifespan": 0
+        }
+      ],
+      "parameters": [
+        {
+          "id": "b8558a96-9254-47d0-b1a7-236051046cfa",
+          "required": false,
+          "dataType": "@sys.person",
+          "name": "name",
+          "value": "$name",
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": [],
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "condition": "",
+          "speech": "Hello $name"
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": [],
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": []
+}

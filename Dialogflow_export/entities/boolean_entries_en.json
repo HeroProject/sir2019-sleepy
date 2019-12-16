@@ -1,0 +1,34 @@
+[
+  {
+    "value": "yes",
+    "synonyms": [
+      "yes",
+      "yes, please",
+      "maybe",
+      "perhaps",
+      "sure",
+      "yeah",
+      "yeah, sure",
+      "yep",
+      "why not",
+      "sounds good",
+      "affirmative",
+      "amen",
+      "fine",
+      "good",
+      "okay",
+      "yea",
+      "yep"
+    ]
+  },
+  {
+    "value": "no",
+    "synonyms": [
+      "no",
+      "never",
+      "nope",
+      "nay",
+      "not"
+    ]
+  }
+]

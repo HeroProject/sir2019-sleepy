@@ -1,0 +1,96 @@
+[
+  {
+    "value": "cat",
+    "synonyms": [
+      "cat",
+      "kitten",
+      "cheetah",
+      "lion",
+      "tiger",
+      "leopard",
+      "snow leopard",
+      "jaguar",
+      "serval",
+      "ocelot",
+      "bobcat",
+      "lynx",
+      "cougar"
+    ]
+  },
+  {
+    "value": "dog",
+    "synonyms": [
+      "puppy",
+      "dog",
+      "dogs",
+      "wolf",
+      "buddy"
+    ]
+  },
+  {
+    "value": "bird",
+    "synonyms": [
+      "bird",
+      "parrot",
+      "eagle"
+    ]
+  },
+  {
+    "value": "elephant",
+    "synonyms": [
+      "elephant",
+      "dumbo",
+      "giraffe"
+    ]
+  },
+  {
+    "value": "reptiles",
+    "synonyms": [
+      "reptiles",
+      "snake"
+    ]
+  },
+  {
+    "value": "fish",
+    "synonyms": [
+      "fish",
+      "dolphin",
+      "shark",
+      "goldfish",
+      "whale",
+      "nemo",
+      "dory"
+    ]
+  },
+  {
+    "value": "gorilla",
+    "synonyms": [
+      "gorilla",
+      "monkey",
+      "chimp",
+      "orangutan",
+      "chimpanzee"
+    ]
+  },
+  {
+    "value": "mouse",
+    "synonyms": [
+      "mouse",
+      "hamster",
+      "rat"
+    ]
+  },
+  {
+    "value": "giraffe",
+    "synonyms": [
+      "giraffe"
+    ]
+  },
+  {
+    "value": "rabbit",
+    "synonyms": [
+      "rabbit",
+      "bugs bunny"
+    ]
+  }
+]

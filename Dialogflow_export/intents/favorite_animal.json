@@ -1,0 +1,45 @@
+{
+  "id": "c44ac9fe-737c-4c5a-955b-07b7c01fb64b",
+  "name": "favorite_animal",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "favorite_animal",
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "id": "16e709b8-cfd4-45f7-805b-4d26395baeb6",
+          "required": false,
+          "dataType": "@animal",
+          "name": "animal",
+          "value": "$animal",
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": [],
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "condition": "",
+          "speech": "Oh nice! my favorite animal is $animal too!"
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": [],
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": []
+}

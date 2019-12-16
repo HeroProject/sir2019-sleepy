@@ -1,0 +1,70 @@
+[
+  {
+    "id": "43bb4a22-73ed-4209-9295-dd5c330297a7",
+    "data": [
+      {
+        "text": "I like ",
+        "userDefined": false
+      },
+      {
+        "text": "gorilla",
+        "alias": "animal",
+        "meta": "@animal",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "c73329d7-d534-44d3-bd1f-62251e30646a",
+    "data": [
+      {
+        "text": "the animal is ",
+        "userDefined": false
+      },
+      {
+        "text": "gorilla",
+        "alias": "animal",
+        "meta": "@animal",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "95c8fb33-7569-49c6-93c5-523c7e643463",
+    "data": [
+      {
+        "text": "cat",
+        "alias": "animal",
+        "meta": "@animal",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "5a7a9d09-f267-446e-9194-dc103f0ef8ba",
+    "data": [
+      {
+        "text": "my favorite animal is ",
+        "userDefined": false
+      },
+      {
+        "text": "elephant",
+        "alias": "animal",
+        "meta": "@animal",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  }
+]
